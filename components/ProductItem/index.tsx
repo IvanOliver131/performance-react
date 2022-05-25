@@ -6,12 +6,14 @@ interface ProductItemProps {
     price: number;
     title: string;
   }
+  onAddToWishList: (id: number) => void;
 }
 
-function ProductItemComponent({ product }: ProductItemProps) {
+function ProductItemComponent({ product, onAddToWishList }: ProductItemProps) {
   return (
     <div>
       {product.title} - <strong>{product.price}</strong>
+      <button onClick={() => onAddToWishList(product.id)}>Add to wishList</button>
     </div>
   );
 }
@@ -27,4 +29,14 @@ export const ProductItem = memo(ProductItemComponent, (prevProps, nextProps) => 
  * 2. Renders too often
  * 3. Re-renders with same props
  * 4. Medium to big size 
+ */
+
+/** 
+ * useMemo / useCallback
+ * ----- useMemo utilização -----
+ * 1. Calculos pesados
+ * 2. Igualdade referencial (quando a gente repassa aquela informação a um componente filho)
+ * 
+ * ----- useCallback utilização -----
+ * 1. 
  */
