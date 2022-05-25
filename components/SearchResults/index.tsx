@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { List, AutoSizer, ListRowRenderer } from 'react-virtualized';
 import { ProductItem } from "../ProductItem";
 
 interface SearchResultsProps {
@@ -20,11 +20,37 @@ export function SearchResults({ totalPrice, results, onAddToWishList }: SearchRe
   //   }, 0)
   // }, [results]); //sempre que os resultados da busca mudarem recalculamos
 
+  const rowRenderer: ListRowRenderer = ({ index, key, style}) => {
+    return (
+      <div key={key} style={style}>
+        <ProductItem 
+          product={results[index]} 
+          onAddToWishList={onAddToWishList} 
+        />
+      </div>
+      
+    )
+  }
+
   return (
     <div>
       <h2>{totalPrice}</h2>
 
-      {results.map(product => {
+      {/* Trabalhar com virtualização */} 
+      <AutoSizer>
+        {({height, width}) => (
+          <List 
+            height={700}
+            rowHeight={30}
+            width={width}
+            overscanRowCount={5}
+            rowCount={results.length}
+            rowRenderer={rowRenderer}
+          />
+        )}
+      </AutoSizer>
+
+      {/* {results.map(product => {
         return (
           <ProductItem 
             key={product.id} 
@@ -32,7 +58,7 @@ export function SearchResults({ totalPrice, results, onAddToWishList }: SearchRe
             onAddToWishList={onAddToWishList} 
           />
         );
-      })}
+      })} */}
     </div>
   );
 }
