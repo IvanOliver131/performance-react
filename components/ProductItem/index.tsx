@@ -1,4 +1,16 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
+import dynamic from 'next/dynamic'; // podemos usar dynamic ou lazy(caso esteja usando react)
+import { AddProductToWishListProps } from '../AddProductToWishList';
+
+
+// import { AddProductToWishList } from '../AddProductToWishList';
+
+// Desta forma so renderizamos esse component quando precisamos
+const AddProductToWishList = dynamic<AddProductToWishListProps>(() => {
+  return import('../AddProductToWishList').then(mod => mod.AddProductToWishList)
+}, {
+  loading: () => <span>Carregando...</span>
+})
 
 interface ProductItemProps {
   product: {
@@ -11,10 +23,27 @@ interface ProductItemProps {
 }
 
 function ProductItemComponent({ product, onAddToWishList }: ProductItemProps) {
+  const [isAddingToWishList, setIsAddingToWishList ] = useState(false);
+  
+  // EXAMPLE ---- Importar alguma lib somente quando precisar
+  // async function showFormattedDate() {
+  //   const { format } = await import('date-fns')
+
+  //   format();
+  // }
+
   return (
     <div>
       {product.title} - <strong>{product.priceFormatted}</strong>
-      <button onClick={() => onAddToWishList(product.id)}>Add to wishList</button>
+      <button onClick={() => setIsAddingToWishList(true)}>Adicionar aos favoritos</button>
+      
+      
+      { isAddingToWishList && ( 
+        <AddProductToWishList 
+          onAddToWishList={() => onAddToWishList(product.id)}
+          onRequestClose={() => setIsAddingToWishList(false)}
+        />
+      ) }
     </div>
   );
 }
