@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import dynamic from 'next/dynamic'; // podemos usar dynamic ou lazy(caso esteja usando react)
 import { AddProductToWishListProps } from '../AddProductToWishList';
-
+import lodash from 'lodash';
 
 // import { AddProductToWishList } from '../AddProductToWishList';
 
@@ -51,7 +51,7 @@ function ProductItemComponent({ product, onAddToWishList }: ProductItemProps) {
 // O memo impede que caso nada mude nao precise renderizar de novo
 // eslint-disable-next-line react/display-name
 export const ProductItem = memo(ProductItemComponent, (prevProps, nextProps) => {
-  return Object.is(prevProps.product, nextProps.product)
+  return lodash.isEqual(prevProps.product, nextProps.product)
 });
 
 /** Quando usar o memo

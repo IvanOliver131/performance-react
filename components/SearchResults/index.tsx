@@ -48,7 +48,7 @@ export function SearchResults({ totalPrice, results, onAddToWishList }: SearchRe
             rowRenderer={rowRenderer}
           />
         )}
-      </AutoSizer>
+      </AutoSizer>      
 
       {/* {results.map(product => {
         return (
