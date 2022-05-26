@@ -36,7 +36,7 @@ export function SearchResults({ totalPrice, results, onAddToWishList }: SearchRe
     <div>
       <h2>{totalPrice}</h2>
 
-      {/* Trabalhar com virtualização */} 
+      {/* Trabalhar com virtualização - Está com erro tenho que arrumar ainda */} 
       <AutoSizer>
         {({height, width}) => (
           <List 
